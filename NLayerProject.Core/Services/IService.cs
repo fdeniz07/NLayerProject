@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NLayerProject.Core.Services
 {
-    internal interface IService<TEntity> where TEntity:class
+    public interface IService<TEntity> where TEntity:class
     {
         /*Buradaki kodlar IRepository ile ayni olacak.
          Peki neden ayni kodlari yazdik?
