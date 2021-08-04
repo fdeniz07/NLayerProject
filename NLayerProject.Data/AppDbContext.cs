@@ -3,6 +3,9 @@ using NLayerProject.Core.Model;
 
 namespace NLayerProject.Data
 {
+    // Best Practice
+    //DbContext sinifi temiz tutulur, kod kalabaligi yapan kodlar baska siniflara yazilarak buradan cagrilir.
+    
     public class AppDbContext:DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
@@ -11,6 +14,7 @@ namespace NLayerProject.Data
         }
 
         public DbSet<Category> Categories { get; set; }
+
         public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
