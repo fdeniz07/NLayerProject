@@ -11,7 +11,7 @@ namespace NLayerProject.Core.Repositories
 
         Task<IEnumerable<TEntity>> GetAllAsync();
 
-        IEnumerable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> Where(Expression<Func<TEntity, bool>> predicate);
 
         // category.SingleOrDefaultAsync(x=>x.name = "kalem")
         Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);

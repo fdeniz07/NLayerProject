@@ -19,14 +19,14 @@ namespace NLayerProject.Core.Services
 
         Task<IEnumerable<TEntity>> GetAllAsync();
 
-        Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> Where(Expression<Func<TEntity, bool>> predicate);
 
         // category.SingleOrDefaultAsync(x=>x.name = "kalem")
         Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 
-        Task AddAsync(TEntity entity); //Tekil ekleme
+        Task<TEntity> AddAsync(TEntity entity); //Tekil ekleme
 
-        Task AddRangeAsync(IEnumerable<TEntity> entities);  //Coklu Ekleme
+        Task<IEnumerable<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities);  //Coklu Ekleme
 
         //Silme islemi EntityFramework de senkron olarak yapilir.
         void Remove(TEntity entity);

@@ -13,7 +13,7 @@ namespace NLayerProject.Data.Repositories
         protected readonly DbContext _context;
         private readonly DbSet<TEntity> _dbSet;
 
-        public Repository(DbContext context)
+        public Repository(AppDbContext context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
@@ -39,9 +39,9 @@ namespace NLayerProject.Data.Repositories
         }
 
         //product.where(x=>x.name="Kalem")
-        public IEnumerable<TEntity> Where(Expression<Func<TEntity, bool>> predicate) //Geri deger döndürdügü icin asenkron olmayacak
+        public async Task<IEnumerable<TEntity>> Where(Expression<Func<TEntity, bool>> predicate) //Geri deger döndürdügü icin asenkron olmayacak
         { 
-           return _dbSet.Where(predicate);
+           return await _dbSet.Where(predicate).ToListAsync();
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
