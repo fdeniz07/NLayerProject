@@ -7,7 +7,7 @@ namespace NLayerProject.Data.Repositories
 {
     public class ProductRepository : Repository<Product>, IProductRepository
     {
-        private AppDbContext appDbContext{get=>_context as AppDbContext;}
+        private AppDbContext _appDbContext { get => _context as AppDbContext; }
 
         public ProductRepository(AppDbContext context) : base(context)
         {
@@ -16,7 +16,7 @@ namespace NLayerProject.Data.Repositories
 
         public async Task<Product> GetWithCategoryByIdAsync(int productId)
         {
-            return await appDbContext.Products.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == productId);
+            return await _appDbContext.Products.Include(x => x.Category).SingleOrDefaultAsync(x => x.Id == productId);
         }
     }
 }

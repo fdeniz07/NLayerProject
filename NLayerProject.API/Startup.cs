@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using NLayerProject.Core.Repositories;
 using NLayerProject.Core.Services;
 using NLayerProject.Core.UnitOfWorks;
@@ -26,12 +27,12 @@ namespace NLayerProject.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); //IRepository generigi ile karsilasirsa Repository den bir instance al ve ata
             services.AddScoped(typeof(IService<>), typeof(Service<>));
-            services.AddScoped<ICategoryService,CategoryService>(); // Generic olmadiklari icin ICategoryService ile karsilasirsa CategoryService den bir instance al ve ata
+            services.AddScoped<ICategoryService, CategoryService>(); // Generic olmadiklari icin ICategoryService ile karsilasirsa CategoryService den bir instance al ve ata
             services.AddScoped<IProductService, ProductService>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<AppDbContext>(options =>
             {
@@ -41,9 +42,13 @@ namespace NLayerProject.API
                 });
             });
 
-          
 
-            services.AddRazorPages();
+
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "NLayerProject.API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,16 +57,11 @@ namespace NLayerProject.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NLayerProject.API v1"));
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -69,7 +69,7 @@ namespace NLayerProject.API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }

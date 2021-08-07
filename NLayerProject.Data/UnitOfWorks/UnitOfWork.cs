@@ -13,14 +13,14 @@ namespace NLayerProject.Data.UnitOfWorks
 
         private CategoryRepository _categoryRepository;
 
+        public IProductRepository Products => _productRepository = _productRepository ?? new ProductRepository(_context); // _productRepository varsa al, yoksa yeni olustur
+
+        public ICategoryRepository Categories => _categoryRepository = _categoryRepository ?? new CategoryRepository(_context);
+
         public UnitOfWork(AppDbContext appDbContext)
         {
             _context = appDbContext;
         }
-
-        public IProductRepository Products => _productRepository = _productRepository ?? new ProductRepository(_context); // _productRepository varsa al, yoksa yeni olustur
-
-        public ICategoryRepository Categories => _categoryRepository = _categoryRepository ?? new CategoryRepository(_context);
 
         public void Commit()
         {

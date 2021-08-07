@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NLayerProject.Core.Repositories
 {
-    public interface IRepository<TEntity> where TEntity:class
+    public interface IRepository<TEntity> where TEntity : class
     {
         Task<TEntity> GetByIdAsync(int id);
 
